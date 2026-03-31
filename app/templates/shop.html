@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Tienda de APKs{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <h1 class="text-white mb-2">📱 Tienda de APKs</h1>
+        <p class="text-white-50">Descarga las mejores aplicaciones</p>
+    </div>
+</div>
+
+<!-- Tabla de APKs -->
+{% if apks %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">📦 Aplicaciones Disponibles ({{ apks|length }})</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>📱 Nombre</th>
+                            <th>🏷️ Versión</th>
+                            <th>📝 Descripción</th>
+                            <th>⬇️ Descargas</th>
+                            <th>💾 Tamaño</th>
+                            <th>⚙️ Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for apk in apks %}
+                        <tr>
+                            <td><strong>{{ apk.name }}</strong></td>
+                            <td><span class="badge bg-info">{{ apk.version }}</span></td>
+                            <td>
+                                {% if apk.description %}
+                                    <small class="text-muted">{{ apk.description[:50] }}{% if apk.description|length > 50 %}...{% endif %}</small>
+                                {% else %}
+                                    <small class="text-muted">Sin descripción</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-success">{{ apk.downloads }}</span>
+                            </td>
+                            <td>
+                                {% if apk.size %}
+                                    <small>{{ (apk.size / 1024 / 1024)|round(2) }} MB</small>
+                                {% else %}
+                                    <small>-</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('main.download', apk_id=apk.id) }}" class="btn btn-sm btn-success">
+                                    ⬇️ Descargar
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">ℹ️ Sin APKs disponibles</h4>
+            <p>Por el momento no hay aplicaciones disponibles para descargar.</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

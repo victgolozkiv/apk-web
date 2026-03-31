@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}APK Manager{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background: #1a1a1a;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #ff6b00;
+        }
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: white !important;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: #1a1a1a;
+            border: 1px solid #333;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+        .card-header {
+            border-bottom: 2px solid #ff6b00;
+            font-weight: 600;
+            background: #0a0a0a !important;
+            color: white;
+        }
+        .alert {
+            border-radius: 12px;
+            border: 1px solid #ff6b00;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .alert-info {
+            background: #0a2540 !important;
+            border-color: #17a2b8 !important;
+        }
+        .alert-danger {
+            background: #2a0f0f !important;
+            border-color: #dc3545 !important;
+        }
+        .alert-success {
+            background: #0a2a0f !important;
+            border-color: #28a745 !important;
+        }
+        .btn {
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #dd5a00 0%, #dd7a00 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-info:hover {
+            background-color: #138496;
+            color: white;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .badge {
+            padding: 0.5rem 0.75rem;
+            font-weight: 600;
+        }
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+        .bg-info {
+            background-color: #17a2b8 !important;
+        }
+        .bg-primary {
+            background-color: #ff6b00 !important;
+        }
+        .table {
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            color: #fff;
+        }
+        .table thead {
+            background: #0a0a0a;
+            border-bottom: 2px solid #ff6b00;
+        }
+        .table td {
+            border-color: #333;
+            vertical-align: middle;
+        }
+        .text-white-50 {
+            color: #aaaaaa !important;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 2px solid #333;
+            padding: 10px 12px;
+            transition: border-color 0.3s;
+            background: #222;
+            color: #fff;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #ff6b00;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25);
+            background: #222;
+            color: #fff;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .mb-4 {
+            margin-bottom: 2rem !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                📱 APK Manager
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Panel admin: oculto, solo accesible por URL directa -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{% if 'error' in category %}danger{% elif 'success' in category %}success{% else %}info{% endif %} alert-dismissible fade show mt-4" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

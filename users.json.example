@@ -1,0 +1,10 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "cambiar-en-produccion-contraseña-segura"
+  },
+  "usuario_ejemplo": {
+    "username": "usuario1",
+    "password": "contraseña_segura"
+  }
+}

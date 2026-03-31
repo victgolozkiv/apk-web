@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Panel Admin - APK Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-lg {% if bloqueado %}border-danger{% endif %}">
+            <div class="card-body p-5">
+                <h2 class="card-title text-center mb-4">
+                    {% if bloqueado %}
+                        🚫 Acceso Bloqueado
+                    {% else %}
+                        🔐 Panel Admin
+                    {% endif %}
+                </h2>
+                
+                {% if bloqueado %}
+                    <div class="alert alert-danger" role="alert">
+                        <h5>⚠️ Demasiados intentos fallidos</h5>
+                        <p>Tu acceso ha sido bloqueado por seguridad.</p>
+                        <small>Si crees que es un error, reinicia tu navegador o contacta al administrador.</small>
+                    </div>
+                {% else %}
+                    <form method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control form-control-lg" id="password" name="password" required autocomplete="current-password">
+                            <small class="text-muted">⚠️ Máximo 2 intentos</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">🔓 Acceder</button>
+                    </form>
+                {% endif %}
+
+                <hr>
+                <p class="text-muted small text-center">
+                    <a href="{{ url_for('main.index') }}">← Volver a la tienda</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

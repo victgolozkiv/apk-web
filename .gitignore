@@ -1,0 +1,50 @@
+# Variables de entorno
+.env
+.env.local
+
+# Entorno virtual
+venv/
+env/
+ENV/
+
+# Pycache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dependencias
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# DATOS SENSIBLES - NUNCA subir a GitHub
+users.json
+apks.json
+uploads/
+logs/
+*.log
+
+# Ambiente
+.env
+.env.local
+
+# APKs subidos
+uploads/*
+!uploads/.gitkeep
+
+# Datos
+users.json
+apks.json
+
+# Logs
+*.log

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - APK Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <h1 class="text-white mb-2">📊 Mi Gestor de APKs</h1>
+        <p class="text-white-50">Gesiona tus aplicaciones APK fácilmente</p>
+    </div>
+</div>
+
+<!-- Tarjeta de Subida -->
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">➕ Subir Nuevo APK</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('main.upload') }}">
+                    {{ csrf_token() }}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="app_name" class="form-label">📱 Nombre de la Aplicación</label>
+                            <input type="text" class="form-control" id="app_name" name="app_name" required placeholder="Ej: Mi App">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="version" class="form-label">🏷️ Versión</label>
+                            <input type="text" class="form-control" id="version" name="version" placeholder="Ej: 1.0.0" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">📝 Descripción (Opcional)</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe esta versión de tu app..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="file" class="form-label">📦 Selecciona el archivo APK</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".apk" required>
+                        <small class="text-muted">⚠️ Máximo 500 MB | Solo archivos .apk</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        🚀 Subir APK
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lista de APKs -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow-lg mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">📱 APKs Subidos ({{ apks|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% if apks %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Aplicación</th>
+                                <th>Versión</th>
+                                <th>Descripción</th>
+                                <th>Descargas</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for apk in apks %}
+                            <tr>
+                                <td><strong>{{ apk.app_name }}</strong></td>
+                                <td><span class="badge bg-info">v{{ apk.version }}</span></td>
+                                <td>
+                                    {% if apk.description %}
+                                        {{ apk.description[:50] }}{% if apk.description|length > 50 %}...{% endif %}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">⬇️ {{ apk.downloads }}</span>
+                                </td>
+                                <td><small class="text-muted">{{ apk.upload_date }}</small></td>
+                                <td>
+                                    <a href="{{ url_for('main.download', apk_id=apk.id) }}" class="btn btn-sm btn-info" title="Descargar">
+                                        ⬇️ Descargar
+                                    </a>
+                                    <a href="{{ url_for('main.delete', apk_id=apk.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este APK?')" title="Eliminar">
+                                        🗑️ Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info" role="alert">
+                    <h6>📭 No hay APKs subidos</h6>
+                    <p class="mb-0">Sube tu primer APK usando el formulario anterior.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-warning" role="alert">
+            <strong>🔒 Seguridad:</strong>
+            <ul class="mb-0 mt-2">
+                <li>Contraseñas encriptadas con hash</li>
+                <li>Sesión segura (HTTPS recomendado en producción)</li>
+                <li>Validación de archivos .apk</li>
+                <li>Límite de 500 MB por archivo</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
