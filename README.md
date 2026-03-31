@@ -16,7 +16,7 @@ Un gestor web simple pero **seguro** para subir y gestionar tus archivos APK. Co
 
 ```bash
 # 1. Navegar al directorio
-cd "/home/victor/Escritorio/pagina-web de mis apks"
+cd "/home/tu/Escritorio/pagina-web de mis apks"
 
 # 2. Crear entorno virtual
 python3 -m venv venv
