@@ -87,3 +87,4 @@ Ver `README.md` para configuración avanzada.
 ---
 
 **¡Listo! Ya puedes subir tus APKs de forma segura! 🔒📱**
+todo se hizo con IA
