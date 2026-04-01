@@ -4,7 +4,7 @@
 
 ### 1️⃣ Instalar (primera vez)
 ```bash
-cd "/home/victor/Escritorio/pagina-web de mis apks"
+cd "/home/tur/Escritorio/pagina-web de mis apks"
 source venv/bin/activate
 pip install -r requirements.txt
 ```
